@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../CSS/Loginpage.css";
 import { loginUser } from "../Actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const Loginpage = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,7 @@ const Loginpage = () => {
           className="btn btn-primary"
           onClick={loginSubmitHandler}
         >
-          Submit
+          Login
         </button>
       </form>
     </div>

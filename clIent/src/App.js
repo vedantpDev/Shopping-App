@@ -9,6 +9,7 @@ import Loginpage from "./pages/Loginpage";
 import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import Cartpage from "./pages/Cartpage";
+import Paymentpage from "./pages/Paymentpage";
 
 function App() {
   return (
@@ -67,6 +68,14 @@ function App() {
             element={
               <PrivateRoute>
                 <Cartpage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/payment"
+            element={
+              <PrivateRoute>
+                <Paymentpage />
               </PrivateRoute>
             }
           />

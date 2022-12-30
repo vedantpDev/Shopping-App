@@ -33,6 +33,13 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
+    case "DEC_PRICE": {
+      return {
+        ...state,
+        cartList: [...state, action.payload],
+      };
+    }
+
     default:
       return state;
   }

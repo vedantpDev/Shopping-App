@@ -1,7 +1,7 @@
 {
   "name": "shopping-app",
   "version": "0.1.0",
-  "proxy":"http://localhost:2121",
+  "proxy": "http://localhost:2121",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -17,6 +17,7 @@
     "bootstrap": "^5.2.3",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
+    "react-currency-conv": "^1.1.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.1",

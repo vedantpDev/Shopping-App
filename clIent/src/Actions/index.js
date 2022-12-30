@@ -67,9 +67,15 @@ export const deleteProduct = (id) => (dispatch) => {
   });
 };
 
-export const updatePrice = (id, quantity) => (dispatch) => {
-  let storeData = Store.getState().productDataReducer.cartList;
-  const filterData = storeData.filter((obj) => obj.id === id);
-  const price = filterData[0].price * 80 * quantity;
-  console.log(price);
-};
+// export const updatePrice = (id, quantity) => (dispatch) => {
+//   let storeData = Store.getState().productDataReducer.cartList;
+//   const filterData = storeData.filter((obj) => obj.id === id);
+//   let price = filterData[0].price;
+//   price = filterData[0].price * 80 * quantity;
+//   console.log({ ...filterData, price: price });
+//   dispatch({
+//     type: "DEC_PRICE",
+//     payload: { ...filterData, price: price },
+//   });
+//   // console.log(price);
+// };
