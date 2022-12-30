@@ -1,0 +1,10 @@
+.footer-div {
+  height: 40px;
+  text-align: center;
+  background-color: goldenrod;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+}

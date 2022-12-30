@@ -1,0 +1,10 @@
+import React from "react";
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+
+const PublicRoute = ({ children }) => {
+  const { email } = useSelector((store) => store.userData);
+  return !email ? children : <Navigate to={"/"} />;
+};
+
+export default PublicRoute;
