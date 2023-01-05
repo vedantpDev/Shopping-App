@@ -1,41 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct } from "../Actions";
 import Paymentpage from "./Paymentpage";
+import { cartListData } from "../Actions";
+import { updateProduct } from "../Actions";
 
 const Cartpage = () => {
   const dispatch = useDispatch();
+  let sum = 0;
 
   const { cartList } = useSelector((store) => store.productDataReducer);
-  let sum = 0;
-  cartList.map((data, i) => {
-    sum += data.price * 80;
-    return sum;
-  });
-  const [totalPrice, settotalPrice] = useState(sum);
+  const [cartListProduct, setCartListProduct] = useState([]);
 
-  const [quantity, setQuantity] = useState(1);
+  useEffect(() => {
+    setCartListProduct([...cartList]);
+  }, [cartList]);
+
+  let instockArray = [];
+  cartListProduct.map((data, i) => {
+    instockArray.push(data.instock);
+  });
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const minusHandler = (id, price) => {
-    setQuantity(quantity - 1);
-    // dispatch(updatePrice(id, quantity));
-    settotalPrice(price);
+  const minusHandler = (i) => {
+    cartListProduct[i].quantity = cartListProduct[i].quantity - 1;
+    setCartListProduct([...cartListProduct]);
   };
 
-  const plusHandler = (id, price) => {
-    setQuantity(quantity + 1);
-    settotalPrice(price);
+  const plusHandler = (i) => {
+    cartListProduct[i].quantity = cartListProduct[i].quantity + 1;
+    setCartListProduct([...cartListProduct]);
   };
+
+  cartListProduct.map((data, i) => {
+    sum += data.price * 80 * data.quantity;
+  });
+
   const deleteItem = (id) => {
     dispatch(deleteProduct(id));
   };
 
   const buyHandler = () => {
     handleShow();
+    dispatch(cartListData(cartListProduct));
   };
   return (
     <div className="container" style={{ marginTop: "15px" }}>
@@ -46,6 +56,7 @@ const Cartpage = () => {
             <th>Name</th>
             <th>Image</th>
             <th>Quantity</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody>
@@ -56,7 +67,7 @@ const Cartpage = () => {
               </td>
             </tr>
           ) : (
-            Array.from(cartList).map((data, i) => {
+            Array.from(cartListProduct).map((data, i) => {
               return (
                 <tr key={i} style={{ textAlign: "center" }}>
                   <th>{data.id}</th>
@@ -69,30 +80,32 @@ const Cartpage = () => {
                   </td>
                   <td>
                     <button
+                      disabled={data.quantity === 1}
                       type="button"
                       style={{ marginRight: "13px" }}
                       onClick={() => {
-                        minusHandler(data.id, data.price * 80 * quantity);
+                        minusHandler(i);
                       }}
                       className="btn btn-danger"
                     >
                       -
                     </button>
-                    <span>{quantity}</span>
+                    <span>{data.quantity}</span>
 
                     <button
+                      disabled={instockArray[i] === data.quantity}
                       style={{ marginLeft: "13px" }}
                       type="button"
                       className="btn btn-primary"
-                      onClick={() => {
-                        plusHandler(data.id, data.price * 80 * quantity);
+                      onClick={(e) => {
+                        plusHandler(i);
                       }}
                     >
                       +
                     </button>
                   </td>
                   <td>
-                    <span>{data.price * 80 * quantity}</span>
+                    <span>{data.price * 80 * data.quantity}</span>
                   </td>
                   <td>
                     <button
@@ -114,7 +127,7 @@ const Cartpage = () => {
               Total Amount
             </td>
             <td colSpan={2} style={{ textAlign: "center", fontSize: " 190%" }}>
-              {totalPrice}
+              {sum}
             </td>
           </tr>
         </tbody>
@@ -122,6 +135,7 @@ const Cartpage = () => {
       <div style={{ textAlign: "center" }}>
         <button
           style={{ padding: "19px 100px 19px 100px" }}
+          disabled={cartListProduct.length === 0}
           type="button"
           onClick={buyHandler}
           className="btn btn-success"
@@ -129,11 +143,7 @@ const Cartpage = () => {
           Buy Now
         </button>
       </div>
-      <Paymentpage
-        totalPrice={totalPrice}
-        show={show}
-        handleClose={handleClose}
-      />
+      <Paymentpage totalPrice={sum} show={show} handleClose={handleClose} />
     </div>
   );
 };

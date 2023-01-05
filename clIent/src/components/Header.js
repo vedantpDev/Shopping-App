@@ -72,7 +72,13 @@ const Header = () => {
             </ul>
           </div>
         </div>
-        <div onClick={userInfo} style={{ marginRight: "21px" }}>
+        <div
+          data-bs-toggle="tooltip"
+          data-bs-placement="top"
+          title="user Detail"
+          onClick={userInfo}
+          style={{ marginRight: "21px" }}
+        >
           <Avatar sx={{ bgcolor: deepOrange[500] }}>{name.charAt(0)}</Avatar>
         </div>
         <div style={{ marginRight: "15px" }}>

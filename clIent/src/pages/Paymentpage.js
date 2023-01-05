@@ -1,17 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { updateProduct } from "../Actions";
 
 const Paymentpage = (props) => {
+  const dispatch = useDispatch();
+
   const { cartList } = useSelector((store) => store.productDataReducer);
   const navigate = useNavigate();
 
+  const [productData, SetproductData] = useState([]);
+  const [billTable, setBillTable] = useState([]);
+
+  useEffect(() => {
+    setBillTable(cartList);
+  }, [cartList]);
+
+  let sum = 0;
+  billTable.map((data, i) => {
+    sum += data.price * 80 * data.quantity;
+  });
+
   const paymentHandler = () => {
     props.handleClose();
-    alert("Thank For Purchasing Product ");
+    dispatch(updateProduct(billTable));
     navigate("/");
   };
 
@@ -22,28 +37,42 @@ const Paymentpage = (props) => {
           <Modal.Title>Your Bill</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {cartList.map((data, i) => {
-            return (
-              <div key={i} style={{ fontSize: "large" }}>
-                <div>
-                  <strong>Product ID</strong> :
-                  <span style={{ color: "blue" }}>{data.id} </span>
-                </div>
-                <div>
-                  <strong>Product Name</strong> : {data.name}
-                </div>
-                <div>
-                  <strong>Product Stock</strong> :
-                  <span style={{ color: "red" }}>{data.instock}</span>
-                </div>
-                <div>
-                  <strong>Product Price</strong> :
-                  <span style={{ color: "green" }}> {props.totalPrice}</span>
-                </div>
-                <Divider />
-              </div>
-            );
-          })}
+          <table className="table table-striped table-hover">
+            <thead>
+              <tr style={{ textAlign: "center" }}>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.from(billTable).map((data, i) => {
+                return (
+                  <tr key={i} style={{ textAlign: "center" }}>
+                    <th>{i + 1}</th>
+                    <td>{data.name}</td>
+                    <td>{data.quantity}</td>
+                    <td>{data.price * 80 * data.quantity}</td>
+                  </tr>
+                );
+              })}
+              <tr>
+                <td
+                  colSpan={3}
+                  style={{ textAlign: "center", fontSize: " 130%" }}
+                >
+                  Total Amount
+                </td>
+                <td
+                  colSpan={1}
+                  style={{ textAlign: "center", fontSize: " 130%" }}
+                >
+                  {sum}
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={props.handleClose}>

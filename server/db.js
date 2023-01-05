@@ -4,6 +4,7 @@ const conn = mysql.createConnection({
   user: "root",
   password: "password",
   database: "shopping",
+  multipleStatements: true,
 });
 
 conn.connect;

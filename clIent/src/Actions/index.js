@@ -3,7 +3,11 @@ import Store from "../Store";
 
 export const productList = () => (dispatch) => {
   axios
-    .get("/productlist")
+    .get("/productlist", {
+      headers: {
+        "auth-token": localStorage.getItem("auth-token"),
+      },
+    })
     .then((res) => {
       dispatch({
         type: "PRODUCT_LIST",
@@ -39,12 +43,47 @@ export const logOut = () => (dispatch) => {
   });
 };
 
-export const filterProduct = (priceRange) => (dispatch) => {
+export const filterClothes = (priceRange) => (dispatch) => {
+  debugger;
   axios
-    .post("/firstRange", priceRange)
+    .post("/clothesRange", priceRange)
     .then((res) => {
       dispatch({
-        type: "PRICE_RANGE",
+        type: "PRICE_RANGE_CLOTHES",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+export const filterGrocery = (priceRange) => (dispatch) => {
+  debugger;
+  axios
+    .post("/groceryRange", priceRange)
+    .then((res) => {
+      dispatch({
+        type: "PRICE_RANGE_GROCERY",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+export const filterMobile = (priceRange) => (dispatch) => {
+  axios
+    .post("/mobileRange", priceRange)
+    .then((res) => {
+      dispatch({
+        type: "PRICE_RANGE_MOBILE",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+export const filterToy = (priceRange) => (dispatch) => {
+  axios
+    .post("/toyRange", priceRange)
+    .then((res) => {
+      dispatch({
+        type: "PRICE_RANGE_TOY",
         payload: res.data.data,
       });
     })
@@ -67,15 +106,72 @@ export const deleteProduct = (id) => (dispatch) => {
   });
 };
 
-// export const updatePrice = (id, quantity) => (dispatch) => {
-//   let storeData = Store.getState().productDataReducer.cartList;
-//   const filterData = storeData.filter((obj) => obj.id === id);
-//   let price = filterData[0].price;
-//   price = filterData[0].price * 80 * quantity;
-//   console.log({ ...filterData, price: price });
-//   dispatch({
-//     type: "DEC_PRICE",
-//     payload: { ...filterData, price: price },
-//   });
-//   // console.log(price);
-// };
+export const updateProduct = (productList) => (dispatch) => {
+  axios
+    .put(`/updateProduct`, productList)
+    .then((res) => {
+      console.log(res);
+      dispatch({
+        type: "UPDATE_LIST",
+        payload: productList,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const productCategory = () => (dispatch) => {
+  axios
+    .get("/categorylist")
+    .then((res) => {
+      dispatch({
+        type: "CATEGORY_LIST",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const clothesListAction = () => (dispatch) => {
+  axios
+    .get("/clothes")
+    .then((res) => {
+      dispatch({
+        type: "CLOTHES_LIST",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log("Error ", err));
+};
+export const groceryListAction = () => (dispatch) => {
+  axios
+    .get("/grocery")
+    .then((res) => {
+      dispatch({
+        type: "GROCERY_LIST",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+export const mobilesListAction = () => (dispatch) => {
+  axios
+    .get("/mobiles")
+    .then((res) => {
+      dispatch({
+        type: "MOBILE_LIST",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+export const toysListAction = () => (dispatch) => {
+  axios
+    .get("/toys")
+    .then((res) => {
+      dispatch({
+        type: "TOY_LIST",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
