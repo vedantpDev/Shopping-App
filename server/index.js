@@ -180,4 +180,23 @@ app.get("/toys", (req, res) => {
     });
   });
 });
+
+app.get("/subCat/:catId", (req, res) => {
+  if (!req.params)
+    return res.status(400).send({
+      err: "Please Provide ID",
+    });
+  let q = `select * from subcategory where category_id = ${req.params.catId}`;
+  conn.query(q, (err, data) => {
+    if (err)
+      return res.status(400).send({
+        error: err,
+      });
+    res.status(200).send({
+      data: data,
+      message: "Success",
+    });
+  });
+});
+
 app.listen(PORT, () => console.log("App Running on ", PORT));
