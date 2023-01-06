@@ -23,6 +23,22 @@ const Productpage = () => {
     "/productlist/mobiles",
     "/productlist/toys",
   ];
+
+  let subCategoryLink = [
+    ["/kidsClothes", "/adultsClothes", "/womenClothes", "/menClothes"],
+    [
+      "/dairyGrocery",
+      "/dryGrocery",
+      "/produceGrocery",
+      "/cannedGrocery",
+      "/personalGrocery",
+    ],
+    [],
+  ];
+
+  const childList = (index) => {
+    console.log(index);
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -32,14 +48,27 @@ const Productpage = () => {
               {category_List.map((data, i) => {
                 return (
                   <div key={i}>
-                    <li className="nav-item">
+                    <li className="nav-item dropdown">
                       <Link
-                        className="nav-link "
-                        aria-current="page"
-                        to={category_links[i]}
+                        className="nav-link dropdown-toggle"
+                        href="#"
+                        id="navbarDropdown"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false"
                       >
                         {data.category}
                       </Link>
+                      <ul
+                        className="dropdown-menu"
+                        aria-labelledby="navbarDropdown"
+                      >
+                        <li>
+                          <Link className="dropdown-item" href="#">
+                            Action
+                          </Link>
+                        </li>
+                      </ul>
                     </li>
                   </div>
                 );
@@ -54,3 +83,13 @@ const Productpage = () => {
 };
 
 export default Productpage;
+
+{
+  /* <Link
+  className="nav-link "
+  aria-current="page"
+  to={category_links[i]}
+  >
+  {data.category}
+  </Link> */
+}
