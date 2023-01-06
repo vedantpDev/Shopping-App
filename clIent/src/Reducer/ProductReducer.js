@@ -1,12 +1,12 @@
+import { cardClasses } from "@mui/material";
+
 // import { useSelector } from "react-redux";
 const initialState = {
   data: [],
   cartList: [],
   categoryList: [],
-  clothesList: [],
-  groceryList: [],
-  mobileList: [],
-  toyList: [],
+  subCat: [],
+  sub_Cat_Product: [],
 };
 
 const ProductReducer = (state = initialState, action) => {
@@ -88,31 +88,17 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
-    case "CLOTHES_LIST": {
+    case "SUB_CAT": {
       return {
         ...state,
-        clothesList: action.payload,
+        subCat: action.payload,
       };
     }
 
-    case "GROCERY_LIST": {
+    case "SUB_CAT_PRODUCT": {
       return {
         ...state,
-        groceryList: action.payload,
-      };
-    }
-
-    case "MOBILE_LIST": {
-      return {
-        ...state,
-        mobileList: action.payload,
-      };
-    }
-
-    case "TOY_LIST": {
-      return {
-        ...state,
-        toyList: action.payload,
+        sub_Cat_Product: action.payload,
       };
     }
 

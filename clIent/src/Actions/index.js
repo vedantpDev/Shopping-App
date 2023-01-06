@@ -131,47 +131,26 @@ export const productCategory = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const clothesListAction = () => (dispatch) => {
+export const fetchSubCat = (catId) => (dispatch) => {
   axios
-    .get("/clothes")
+    .get(`/subCat/${catId}`)
     .then((res) => {
       dispatch({
-        type: "CLOTHES_LIST",
+        type: "SUB_CAT",
         payload: res.data.data,
       });
     })
     .catch((err) => console.log("Error ", err));
 };
-export const groceryListAction = () => (dispatch) => {
+
+export const subCatProduct = (subCatId) => (dispatch) => {
   axios
-    .get("/grocery")
+    .get(`/getSubCatProduct/${subCatId}`)
     .then((res) => {
       dispatch({
-        type: "GROCERY_LIST",
+        type: "SUB_CAT_PRODUCT",
         payload: res.data.data,
       });
     })
-    .catch((err) => console.log(err));
-};
-export const mobilesListAction = () => (dispatch) => {
-  axios
-    .get("/mobiles")
-    .then((res) => {
-      dispatch({
-        type: "MOBILE_LIST",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-export const toysListAction = () => (dispatch) => {
-  axios
-    .get("/toys")
-    .then((res) => {
-      dispatch({
-        type: "TOY_LIST",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log("Error ", err));
 };

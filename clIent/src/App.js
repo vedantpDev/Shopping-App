@@ -10,10 +10,6 @@ import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import Cartpage from "./pages/Cartpage";
 import Paymentpage from "./pages/Paymentpage";
-import Mobile from "./pages/Mobile";
-import Clothes from "./pages/Clothes";
-import Grocery from "./pages/Grocery";
-import Toys from "./pages/Toys";
 import CategoryHomePage from "./pages/CategoryHomePage";
 
 function App() {
@@ -53,10 +49,10 @@ function App() {
             }
           >
             <Route path="/productlist" element={<CategoryHomePage />} />
-            <Route path="/productlist/clothes" element={<Clothes />} />
+            {/* <Route path="/productlist/clothes" element={<Clothes />} />
             <Route path="/productlist/toys" element={<Toys />} />
             <Route path="/productlist/grocery" element={<Grocery />} />
-            <Route path="/productlist/mobiles" element={<Mobile />} />
+            <Route path="/productlist/mobiles" element={<Mobile />} /> */}
           </Route>
           <Route
             path="/contact"
