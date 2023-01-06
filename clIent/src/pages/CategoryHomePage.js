@@ -64,13 +64,15 @@ const CategoryHomePage = () => {
 
   return (
     <div>
-      <div style={{ textAlign: "center", marginTop: "15px" }}>
+      <div
+        style={{ textAlign: "right", marginTop: "15px", marginRight: "39px" }}
+      >
         <button
           type="button"
           onClick={purchaseHandler}
           className="btn btn-primary position-relative"
         >
-          Confirm order
+          View Cart
           <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
             {badge}
           </span>
