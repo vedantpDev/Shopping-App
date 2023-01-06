@@ -180,4 +180,6 @@ app.get("/toys", (req, res) => {
     });
   });
 });
+
+app.get("/subCat/:catId", (req, res) => {});
 app.listen(PORT, () => console.log("App Running on ", PORT));
