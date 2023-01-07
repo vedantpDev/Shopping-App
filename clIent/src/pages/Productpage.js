@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import "../CSS/ProductPage.css";
 import { productCategory } from "../Actions";
+import { fetchSubCat } from "../Actions";
+import { subCatProduct } from "../Actions";
+import CategoryHomePage from "./CategoryHomePage";
 
 const Productpage = () => {
   const dispatch = useDispatch();
@@ -17,27 +20,19 @@ const Productpage = () => {
     setCategory_List(categoryList);
   }, [categoryList]);
 
-  let category_links = [
-    "/productlist/clothes",
-    "/productlist/grocery",
-    "/productlist/mobiles",
-    "/productlist/toys",
-  ];
+  const [subCatState, setSubCatState] = useState([]);
 
-  let subCategoryLink = [
-    ["/kidsClothes", "/adultsClothes", "/womenClothes", "/menClothes"],
-    [
-      "/dairyGrocery",
-      "/dryGrocery",
-      "/produceGrocery",
-      "/cannedGrocery",
-      "/personalGrocery",
-    ],
-    [],
-  ];
+  const catClickHandler = (id) => {
+    dispatch(fetchSubCat(id));
+  };
+  const { subCat } = useSelector((store) => store.productDataReducer);
 
-  const childList = (index) => {
-    console.log(index);
+  useEffect(() => {
+    setSubCatState(subCat);
+  }, [subCat]);
+
+  const subCatClickHandler = (subCatID) => {
+    dispatch(subCatProduct(subCatID));
   };
   return (
     <div>
@@ -45,13 +40,14 @@ const Productpage = () => {
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              {category_List.map((data, i) => {
+              {Array.from(categoryList).map((data, i) => {
                 return (
                   <div key={i}>
                     <li className="nav-item dropdown">
                       <Link
                         className="nav-link dropdown-toggle"
                         href="#"
+                        onClick={() => catClickHandler(data.id)}
                         id="navbarDropdown"
                         role="button"
                         data-bs-toggle="dropdown"
@@ -64,9 +60,21 @@ const Productpage = () => {
                         aria-labelledby="navbarDropdown"
                       >
                         <li>
-                          <Link className="dropdown-item" href="#">
-                            Action
-                          </Link>
+                          {subCatState.map((subCatData, j) => {
+                            return (
+                              <div key={j}>
+                                <Link
+                                  className="dropdown-item"
+                                  href="#"
+                                  onClick={() =>
+                                    subCatClickHandler(subCatData.id)
+                                  }
+                                >
+                                  {subCatData.name}
+                                </Link>
+                              </div>
+                            );
+                          })}
                         </li>
                       </ul>
                     </li>
@@ -83,13 +91,3 @@ const Productpage = () => {
 };
 
 export default Productpage;
-
-{
-  /* <Link
-  className="nav-link "
-  aria-current="page"
-  to={category_links[i]}
-  >
-  {data.category}
-  </Link> */
-}

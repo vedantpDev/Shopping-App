@@ -22,51 +22,6 @@ app.get("/productlist", (req, res) => {
   });
 });
 
-app.post("/clothesRange", (req, res) => {
-  if (!req.body) return new Error("Please Provide Data");
-  let q = `SELECT * FROM productlist WHERE price BETWEEN ${req.body.startPrice} AND ${req.body.endPrice} AND category_key = 1`;
-  conn.query(q, (err, data) => {
-    if (err) return new Error(err);
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-app.post("/groceryRange", (req, res) => {
-  if (!req.body) return new Error("Please Provide Data");
-  let q = `SELECT * FROM productlist WHERE price BETWEEN ${req.body.startPrice} AND ${req.body.endPrice} AND category_key = 2`;
-  conn.query(q, (err, data) => {
-    if (err) return new Error(err);
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-app.post("/mobileRange", (req, res) => {
-  if (!req.body) return new Error("Please Provide Data");
-  let q = `SELECT * FROM productlist WHERE price BETWEEN ${req.body.startPrice} AND ${req.body.endPrice} AND category_key = 3`;
-  conn.query(q, (err, data) => {
-    if (err) return new Error(err);
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-app.post("/toyRange", (req, res) => {
-  if (!req.body) return new Error("Please Provide Data");
-  let q = `SELECT * FROM productlist WHERE price BETWEEN ${req.body.startPrice} AND ${req.body.endPrice} AND category_key = 4`;
-  conn.query(q, (err, data) => {
-    if (err) return new Error(err);
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-
 app.put(`/updateProduct`, (req, res) => {
   let arrayList = req.body;
   if (!req.body) return new Error("Please Provide Data");
@@ -125,68 +80,30 @@ app.get("/categorylist", (req, res) => {
   });
 });
 
-app.get("/clothes", (req, res) => {
-  let q = `select * from productlist where category_key = 1`;
-  conn.query(q, (err, data) => {
-    if (err)
-      return res.status(400).send({
-        error: err,
-      });
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-
-app.get("/grocery", (req, res) => {
-  let q = `select * from productlist where category_key = 2`;
-  conn.query(q, (err, data) => {
-    if (err)
-      return res.status(400).send({
-        error: err,
-      });
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-
-app.get("/mobiles", (req, res) => {
-  let q = `select * from productlist where category_key = 3`;
-  conn.query(q, (err, data) => {
-    if (err)
-      return res.status(400).send({
-        error: err,
-      });
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-
-app.get("/toys", (req, res) => {
-  let q = `select * from productlist where category_key = 4`;
-  conn.query(q, (err, data) => {
-    if (err)
-      return res.status(400).send({
-        error: err,
-      });
-    res.status(200).send({
-      data: data,
-      message: "Success",
-    });
-  });
-});
-
 app.get("/subCat/:catId", (req, res) => {
   if (!req.params)
     return res.status(400).send({
       err: "Please Provide ID",
     });
   let q = `select * from subcategory where category_id = ${req.params.catId}`;
+  conn.query(q, (err, data) => {
+    if (err)
+      return res.status(400).send({
+        error: err,
+      });
+    res.status(200).send({
+      data: data,
+      message: "Success",
+    });
+  });
+});
+
+app.get("/getSubCatProduct/:subCatId", (req, res) => {
+  if (!req.params)
+    return res.status(400).send({
+      err: "Please Provide Sub Category ID",
+    });
+  let q = `select * from productlist where sub_cat_id = ${req.params.subCatId}`;
   conn.query(q, (err, data) => {
     if (err)
       return res.status(400).send({
