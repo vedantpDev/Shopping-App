@@ -1,13 +1,9 @@
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productList } from "../Actions";
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "../CSS/ProductPage.css";
-import { filterClothes } from "../Actions";
 import { useNavigate } from "react-router-dom";
-import { cartListData } from "../Actions";
-import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { IconButton } from "@mui/material";
+
 import { productCategory } from "../Actions";
 
 const CategoryHomePage = (props) => {
@@ -26,11 +22,12 @@ const CategoryHomePage = (props) => {
     setAllProduct(data);
   }, [data]);
 
-  const [cartObj, setCartObj] = useState([]);
-  const [badge, setBadge] = useState(0);
-  const [disabledArray, setDisabledArray] = useState([]);
+  const [subCatList, setSubCatList] = useState([]);
+
   const [category_List, setCategory_List] = useState([]);
-  const { categoryList } = useSelector((store) => store.productDataReducer);
+  const { categoryList, sub_Cat_Product } = useSelector(
+    (store) => store.productDataReducer
+  );
 
   useEffect(() => {
     dispatch(productCategory());
@@ -40,48 +37,24 @@ const CategoryHomePage = (props) => {
     setCategory_List(categoryList);
   }, [categoryList]);
 
-  const priceHanlder = (strat, end) => {
-    console.log("Inside priceHanlder  ");
-    let priceRange = { startPrice: strat, endPrice: end };
-    dispatch(filterClothes(priceRange));
-  };
-
-  const cartHandler = (id) => {
-    disabledArray.push(id);
-    setDisabledArray(disabledArray);
-    setBadge(badge + 1);
-    const filterData = allProduct.filter((obj) => obj.id === id);
-    cartObj.push({ ...filterData[0], quantity: 1 });
-  };
-
-  const purchaseHandler = (e) => {
-    e.preventDefault();
-    dispatch(cartListData(cartObj));
-    navigate("/cartlist");
-  };
-
-  const [subCatList, setSubCatList] = useState([]);
-  const { sub_Cat_Product } = useSelector((store) => store.productDataReducer);
   useEffect(() => {
     setSubCatList(sub_Cat_Product);
   }, [sub_Cat_Product]);
 
+  // const cartHandler = (id) => {
+  //   disabledArray.push(id);
+  //   setDisabledArray(disabledArray);
+  //   setBadge(badge + 1);
+  //   const filterData = allProduct.filter((obj) => obj.id === id);
+  //   cartObj.push({ ...filterData[0], quantity: 1 });
+  // };
+
+  const productHandler = (product) => {
+    navigate("/productlist/productpage", { state: product });
+  };
+
   return (
     <div>
-      <div
-        style={{ textAlign: "right", marginTop: "15px", marginRight: "39px" }}
-      >
-        <button
-          type="button"
-          onClick={purchaseHandler}
-          className="btn btn-primary position-relative"
-        >
-          View Cart
-          <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-            {badge}
-          </span>
-        </button>
-      </div>
       <div
         style={{
           display: "flex",
@@ -94,7 +67,7 @@ const CategoryHomePage = (props) => {
           (data, i) => {
             return (
               <div key={i}>
-                <div className="container">
+                <div className="container" onClick={() => productHandler(data)}>
                   <div className="card">
                     <div>
                       <img
@@ -116,27 +89,10 @@ const CategoryHomePage = (props) => {
                           color: "green",
                           fontSize: "18px",
                         }}
-                      >{`Price : ₹${data.price * 80}`}</div>
+                      >{`Price : ₹ ${data.price * 80}`}</div>
                       <div
                         style={{ margin: "14px", fontSize: "15px" }}
                       >{`InStock : ${data.instock}`}</div>
-                      <div>
-                        <Link
-                          disabled={data.instock === 0}
-                          style={{ padding: "20px", marginRight: "10px" }}
-                          className="btn btn-primary"
-                          onClick={() => cartHandler(data.id)}
-                        >
-                          Add to Cart
-                        </Link>
-                      </div>
-                      <IconButton
-                        disabled={
-                          disabledArray.includes(data.id) ? false : true
-                        }
-                      >
-                        <AddShoppingCartIcon />
-                      </IconButton>
                     </div>
                   </div>
                 </div>
