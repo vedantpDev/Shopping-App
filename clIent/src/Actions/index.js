@@ -154,3 +154,10 @@ export const subCatProduct = (subCatId) => (dispatch) => {
     })
     .catch((err) => console.log("Error ", err));
 };
+
+export const selectedSubProduct = (obj) => (dispatch) => {
+  dispatch({
+    type: "SELECTED_PRODUCT",
+    payload: obj,
+  });
+};

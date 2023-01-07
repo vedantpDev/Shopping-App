@@ -41,14 +41,6 @@ const CategoryHomePage = (props) => {
     setSubCatList(sub_Cat_Product);
   }, [sub_Cat_Product]);
 
-  // const cartHandler = (id) => {
-  //   disabledArray.push(id);
-  //   setDisabledArray(disabledArray);
-  //   setBadge(badge + 1);
-  //   const filterData = allProduct.filter((obj) => obj.id === id);
-  //   cartObj.push({ ...filterData[0], quantity: 1 });
-  // };
-
   const productHandler = (product) => {
     navigate("/productlist/productpage", { state: product });
   };

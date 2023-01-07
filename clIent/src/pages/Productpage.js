@@ -44,7 +44,7 @@ const Productpage = () => {
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              {Array.from(categoryList).map((data, i) => {
+              {Array.from(category_List).map((data, i) => {
                 return (
                   <div key={i}>
                     <li className="nav-item dropdown">

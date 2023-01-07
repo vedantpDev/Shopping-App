@@ -1,16 +1,15 @@
 import { cardClasses } from "@mui/material";
 
-// import { useSelector } from "react-redux";
 const initialState = {
   data: [],
   cartList: [],
   categoryList: [],
   subCat: [],
   sub_Cat_Product: [],
+  product: [],
 };
 
 const ProductReducer = (state = initialState, action) => {
-  // const { data } = useSelector((store) => store.productDataReducer);
   switch (action.type) {
     case "PRODUCT_LIST": {
       return {
@@ -102,13 +101,16 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
+    case "SELECTED_PRODUCT": {
+      return {
+        ...state,
+        product: action.payload,
+      };
+    }
+
     default:
       return state;
   }
 };
 
 export default ProductReducer;
-
-// productData[index] = { ...cartArray[index] };
-//         productData = [...productData];
-//         console.log("All Data", productData);
