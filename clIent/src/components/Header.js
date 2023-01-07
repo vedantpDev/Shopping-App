@@ -7,8 +7,11 @@ import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
 import UserDetail from "../pages/UserDetail";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { cartListData } from "../Actions";
 
-const Header = () => {
+const Header = ({ cartObj, badge }) => {
+  console.log("inside the Header", badge);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,6 +28,12 @@ const Header = () => {
 
   const userInfo = () => {
     handleShow();
+  };
+
+  const purchaseHandler = (e) => {
+    e.preventDefault();
+    dispatch(cartListData(cartObj));
+    navigate("/cartlist");
   };
   return (
     <div>
@@ -72,6 +81,7 @@ const Header = () => {
             </ul>
           </div>
         </div>
+
         <div
           data-bs-toggle="tooltip"
           data-bs-placement="top"

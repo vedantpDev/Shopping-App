@@ -11,6 +11,7 @@ import PublicRoute from "./components/PublicRoute";
 import Cartpage from "./pages/Cartpage";
 import Paymentpage from "./pages/Paymentpage";
 import CategoryHomePage from "./pages/CategoryHomePage";
+import ProductDetailPage from "./pages/ProductDetailPage";
 
 function App() {
   return (
@@ -49,11 +50,12 @@ function App() {
             }
           >
             <Route path="/productlist" element={<CategoryHomePage />} />
-            {/* <Route path="/productlist/clothes" element={<Clothes />} />
-            <Route path="/productlist/toys" element={<Toys />} />
-            <Route path="/productlist/grocery" element={<Grocery />} />
-            <Route path="/productlist/mobiles" element={<Mobile />} /> */}
+            <Route
+              path="/productlist/productpage"
+              element={<ProductDetailPage />}
+            />
           </Route>
+
           <Route
             path="/contact"
             element={
