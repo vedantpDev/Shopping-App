@@ -20,7 +20,7 @@ const Paymentpage = (props) => {
   }, [cartList]);
 
   let sum = 0;
-  billTable.map((data, i) => {
+  Array.from(billTable).map((data, i) => {
     sum += data.price * 80 * data.quantity;
   });
 

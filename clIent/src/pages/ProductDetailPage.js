@@ -5,33 +5,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { IconButton } from "@mui/material";
-import { selectedSubProduct } from "../Actions/index";
+import { cartListData } from "../Actions/index";
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { state } = useLocation();
-  const [selectedProduct, SetselectedProduct] = useState([]);
+  const [selectedProduct, SetselectedProduct] = useState({});
   const [disabledArray, setDisabledArray] = useState([]);
 
   useEffect(() => {
-    Array.from(selectedProduct).push(state);
+    if (state && Object.keys(state).length > 0) SetselectedProduct(state);
   }, [state]);
 
-  useEffect(() => {
-    SetselectedProduct(state);
-  }, [state]);
-
+  const [itemArray, setItemArray] = useState([]);
   const cartHandler = (id) => {
-    debugger;
-    console.log([selectedProduct]);
+    itemArray.push({ ...selectedProduct, quantity: 1 });
+    setItemArray(itemArray);
     disabledArray.push(id);
     setDisabledArray(disabledArray);
-    dispatch(selectedSubProduct([selectedProduct]));
-    navigate("/productlist");
+    dispatch(cartListData(itemArray));
   };
-
   return (
     <div>
       <div className="container" style={{ marginTop: "32px" }}>
@@ -41,13 +36,13 @@ const ProductDetailPage = () => {
           </div>
           <div className="col-md-6">
             <div className="description-product">
-              <strong>Name</strong> : {selectedProduct.name}
+              <strong>Name</strong> : {selectedProduct?.name}
             </div>
             <div className="description-product">
-              <strong>Price</strong> : ₹ {selectedProduct.price * 80}
+              <strong>Price</strong> : ₹ {selectedProduct?.price * 80}
             </div>
             <div className="description-product">
-              <strong>Instock</strong> : {selectedProduct.instock}
+              <strong>Instock</strong> : {selectedProduct?.instock}
             </div>
             <div className="description-product">
               <strong>Detail</strong> : Lorem, ipsum dolor sit amet consectetur
@@ -66,7 +61,7 @@ const ProductDetailPage = () => {
             </div>
             <div>
               <Link
-                disabled={selectedProduct.instock === 0}
+                disabled={selectedProduct?.instock === 0}
                 style={{ padding: "20px", marginRight: "10px" }}
                 className="btn btn-primary"
                 onClick={() => cartHandler(selectedProduct.id)}
@@ -76,7 +71,7 @@ const ProductDetailPage = () => {
             </div>
             <IconButton
               disabled={
-                disabledArray.includes(selectedProduct.id) ? false : true
+                disabledArray.includes(selectedProduct?.id) ? false : true
               }
             >
               <AddShoppingCartIcon />

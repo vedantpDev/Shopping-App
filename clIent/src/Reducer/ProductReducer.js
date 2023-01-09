@@ -1,12 +1,9 @@
-import { cardClasses } from "@mui/material";
-
 const initialState = {
   data: [],
   cartList: [],
   categoryList: [],
   subCat: [],
   sub_Cat_Product: [],
-  product: [],
 };
 
 const ProductReducer = (state = initialState, action) => {
@@ -18,37 +15,10 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
-    case "PRICE_RANGE_CLOTHES": {
-      return {
-        ...state,
-        clothesList: action.payload,
-      };
-    }
-    case "PRICE_RANGE_GROCERY": {
-      return {
-        ...state,
-        groceryList: action.payload,
-      };
-    }
-
-    case "PRICE_RANGE_MOBILE": {
-      return {
-        ...state,
-        mobileList: action.payload,
-      };
-    }
-
-    case "PRICE_RANGE_TOY": {
-      return {
-        ...state,
-        toyList: action.payload,
-      };
-    }
-
     case "CART_LIST": {
       return {
         ...state,
-        cartList: action.payload,
+        cartList: [...state.cartList, action.payload[0]],
       };
     }
 
@@ -67,7 +37,6 @@ const ProductReducer = (state = initialState, action) => {
     }
 
     case "UPDATE_LIST": {
-      debugger;
       let productData = state.data;
       let cartArray = action.payload;
       // cartArray.map((data, i) => {
@@ -77,6 +46,7 @@ const ProductReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+        cartList: [],
       };
     }
 
@@ -98,13 +68,6 @@ const ProductReducer = (state = initialState, action) => {
       return {
         ...state,
         sub_Cat_Product: action.payload,
-      };
-    }
-
-    case "SELECTED_PRODUCT": {
-      return {
-        ...state,
-        product: action.payload,
       };
     }
 

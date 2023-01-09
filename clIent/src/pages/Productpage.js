@@ -6,7 +6,6 @@ import { productCategory } from "../Actions";
 import { fetchSubCat } from "../Actions";
 import { useNavigate, useLocation } from "react-router-dom";
 import { subCatProduct } from "../Actions";
-import CategoryHomePage from "./CategoryHomePage";
 
 const Productpage = () => {
   const dispatch = useDispatch();
@@ -27,7 +26,6 @@ const Productpage = () => {
 
   const catClickHandler = (id) => {
     dispatch(fetchSubCat(id));
-    navigate("/productlist");
   };
   const { subCat } = useSelector((store) => store.productDataReducer);
 
@@ -69,7 +67,7 @@ const Productpage = () => {
                               <div key={j}>
                                 <Link
                                   className="dropdown-item"
-                                  href="#"
+                                  to="/productlist"
                                   onClick={() =>
                                     subCatClickHandler(subCatData.id)
                                   }

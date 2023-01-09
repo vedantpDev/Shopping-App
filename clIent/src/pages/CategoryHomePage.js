@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { productList } from "../Actions";
 import "../CSS/ProductPage.css";
 import { useNavigate } from "react-router-dom";
-
 import { productCategory } from "../Actions";
 
 const CategoryHomePage = (props) => {
@@ -60,7 +59,10 @@ const CategoryHomePage = (props) => {
             return (
               <div key={i}>
                 <div className="container" onClick={() => productHandler(data)}>
-                  <div className="card">
+                  <div
+                    className="card"
+                    disabled={data.instock === 0 ? true : false}
+                  >
                     <div>
                       <img
                         src={`${data.pic}`}

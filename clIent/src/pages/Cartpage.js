@@ -13,11 +13,12 @@ const Cartpage = () => {
   const [cartListProduct, setCartListProduct] = useState([]);
 
   useEffect(() => {
-    setCartListProduct([...cartList]);
+    setCartListProduct(cartList);
   }, [cartList]);
+  console.log("This is a Cart List Product ", cartListProduct);
 
   let instockArray = [];
-  cartListProduct.map((data, i) => {
+  Array.from(cartListProduct).map((data, i) => {
     instockArray.push(data.instock);
   });
 
@@ -35,7 +36,7 @@ const Cartpage = () => {
     setCartListProduct([...cartListProduct]);
   };
 
-  cartListProduct.map((data, i) => {
+  Array.from(cartListProduct).map((data, i) => {
     sum += data.price * 80 * data.quantity;
   });
 
@@ -45,7 +46,8 @@ const Cartpage = () => {
 
   const buyHandler = () => {
     handleShow();
-    dispatch(cartListData(cartListProduct));
+    console.log("inside cartpage", cartListProduct.price);
+    // dispatch(cartListData(cartListProduct));
   };
   return (
     <div className="container" style={{ marginTop: "15px" }}>
@@ -60,14 +62,14 @@ const Cartpage = () => {
           </tr>
         </thead>
         <tbody>
-          {cartList.length === 0 ? (
+          {cartListProduct.length === 0 ? (
             <tr style={{ textAlign: "center", fontSize: "26px", color: "red" }}>
               <td colSpan={5} style={{ color: "red" }}>
                 Please Select Item
               </td>
             </tr>
           ) : (
-            Array.from(cartListProduct).map((data, i) => {
+            cartListProduct.map((data, i) => {
               return (
                 <tr key={i} style={{ textAlign: "center" }}>
                   <th>{data.id}</th>

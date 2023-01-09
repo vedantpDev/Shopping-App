@@ -13,7 +13,7 @@ import { cartListData } from "../Actions";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { product } = useSelector((store) => store.productDataReducer);
+  const { cartList } = useSelector((store) => store.productDataReducer);
 
   const [badge, setBadge] = useState(0);
   const [show, setShow] = useState(false);
@@ -23,8 +23,8 @@ const Header = () => {
   const { name } = useSelector((store) => store.userData);
 
   useEffect(() => {
-    setBadge(product.length);
-  }, [product]);
+    setBadge(cartList.length);
+  }, [cartList]);
 
   const logout = () => {
     dispatch(logOut());
@@ -37,7 +37,7 @@ const Header = () => {
 
   const purchaseHandler = (e) => {
     e.preventDefault();
-    dispatch(cartListData(product));
+    // dispatch(cartListData(cartList));
     navigate("/cartlist");
   };
   return (
