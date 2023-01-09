@@ -44,7 +44,6 @@ export const logOut = () => (dispatch) => {
 };
 
 export const cartListData = (data) => (dispatch) => {
-  console.log("Inside Action", data);
   dispatch({
     type: "CART_LIST",
     payload: data,

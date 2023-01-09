@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct } from "../Actions";
 import Paymentpage from "./Paymentpage";
-import { cartListData } from "../Actions";
-import { updateProduct } from "../Actions";
 
 const Cartpage = () => {
   const dispatch = useDispatch();
@@ -15,7 +13,6 @@ const Cartpage = () => {
   useEffect(() => {
     setCartListProduct(cartList);
   }, [cartList]);
-  console.log("This is a Cart List Product ", cartListProduct);
 
   let instockArray = [];
   Array.from(cartListProduct).map((data, i) => {
@@ -46,8 +43,6 @@ const Cartpage = () => {
 
   const buyHandler = () => {
     handleShow();
-    console.log("inside cartpage", cartListProduct.price);
-    // dispatch(cartListData(cartListProduct));
   };
   return (
     <div className="container" style={{ marginTop: "15px" }}>

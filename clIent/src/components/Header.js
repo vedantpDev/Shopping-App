@@ -8,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
 import UserDetail from "../pages/UserDetail";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { cartListData } from "../Actions";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -37,7 +36,6 @@ const Header = () => {
 
   const purchaseHandler = (e) => {
     e.preventDefault();
-    // dispatch(cartListData(cartList));
     navigate("/cartlist");
   };
   return (

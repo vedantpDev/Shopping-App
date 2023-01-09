@@ -4,15 +4,15 @@ import { Link, Outlet } from "react-router-dom";
 import "../CSS/ProductPage.css";
 import { productCategory } from "../Actions";
 import { fetchSubCat } from "../Actions";
-import { useNavigate, useLocation } from "react-router-dom";
 import { subCatProduct } from "../Actions";
 
 const Productpage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [category_List, setCategory_List] = useState([]);
-  const { categoryList } = useSelector((store) => store.productDataReducer);
+  const { categoryList, sub_Cat_Product } = useSelector(
+    (store) => store.productDataReducer
+  );
 
   useEffect(() => {
     dispatch(productCategory());
@@ -36,12 +36,24 @@ const Productpage = () => {
   const subCatClickHandler = (subCatID) => {
     dispatch(subCatProduct(subCatID));
   };
+
+  const allProductList = () => {
+    sub_Cat_Product.length = 0;
+  };
   return (
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
+              <div style={{ paddingTop: "8px" }}>
+                <Link
+                  style={{ textDecoration: "none", color: "rgb(0 0 0)" }}
+                  onClick={allProductList}
+                >
+                  All Product
+                </Link>
+              </div>
               {Array.from(category_List).map((data, i) => {
                 return (
                   <div key={i}>

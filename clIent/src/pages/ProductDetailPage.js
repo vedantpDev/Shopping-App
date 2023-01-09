@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import "../CSS/ProductDetailPage.css";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { IconButton } from "@mui/material";
 import { cartListData } from "../Actions/index";
 
 const ProductDetailPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const { state } = useLocation();
@@ -27,6 +26,7 @@ const ProductDetailPage = () => {
     setDisabledArray(disabledArray);
     dispatch(cartListData(itemArray));
   };
+
   return (
     <div>
       <div className="container" style={{ marginTop: "32px" }}>
@@ -79,6 +79,7 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </div>
+      {/* <CategoryHomePage cartHandler={cartHandler} /> */}
     </div>
   );
 };

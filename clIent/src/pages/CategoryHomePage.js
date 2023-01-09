@@ -9,22 +9,10 @@ const CategoryHomePage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data } = useSelector((store) => store.productDataReducer);
-
-  const [allProduct, setAllProduct] = useState([]);
-
-  useEffect(() => {
-    dispatch(productList());
-  }, []);
-
-  useEffect(() => {
-    setAllProduct(data);
-  }, [data]);
-
   const [subCatList, setSubCatList] = useState([]);
 
   const [category_List, setCategory_List] = useState([]);
-  const { categoryList, sub_Cat_Product } = useSelector(
+  const { categoryList, sub_Cat_Product, getAllData } = useSelector(
     (store) => store.productDataReducer
   );
 
@@ -43,6 +31,19 @@ const CategoryHomePage = (props) => {
   const productHandler = (product) => {
     navigate("/productlist/productpage", { state: product });
   };
+
+  const cartHandler = () => {};
+
+  const { data } = useSelector((store) => store.productDataReducer);
+
+  const [allProduct, setAllProduct] = useState([]);
+  useEffect(() => {
+    setAllProduct(data);
+  }, [data]);
+
+  useEffect(() => {
+    dispatch(productList());
+  }, []);
 
   return (
     <div>
@@ -87,6 +88,16 @@ const CategoryHomePage = (props) => {
                       <div
                         style={{ margin: "14px", fontSize: "15px" }}
                       >{`InStock : ${data.instock}`}</div>
+                      <div>
+                        <button
+                          type="button"
+                          style={{ padding: "23px 30px 23px 30px" }}
+                          onClick={cartHandler}
+                          className="btn btn-primary position-relative"
+                        >
+                          Add to Cart
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
