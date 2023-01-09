@@ -4,15 +4,18 @@ import { productList } from "../Actions";
 import "../CSS/ProductPage.css";
 import { useNavigate } from "react-router-dom";
 import { productCategory } from "../Actions";
+import { homeCartListData } from "../Actions";
 
 const CategoryHomePage = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [subCatList, setSubCatList] = useState([]);
-
+  const [allProduct, setAllProduct] = useState([]);
+  const [selectedProArray, setSelectedProArray] = useState([]);
   const [category_List, setCategory_List] = useState([]);
-  const { categoryList, sub_Cat_Product, getAllData } = useSelector(
+
+  const { categoryList, sub_Cat_Product, data } = useSelector(
     (store) => store.productDataReducer
   );
 
@@ -28,15 +31,6 @@ const CategoryHomePage = (props) => {
     setSubCatList(sub_Cat_Product);
   }, [sub_Cat_Product]);
 
-  const productHandler = (product) => {
-    navigate("/productlist/productpage", { state: product });
-  };
-
-  const cartHandler = () => {};
-
-  const { data } = useSelector((store) => store.productDataReducer);
-
-  const [allProduct, setAllProduct] = useState([]);
   useEffect(() => {
     setAllProduct(data);
   }, [data]);
@@ -44,6 +38,17 @@ const CategoryHomePage = (props) => {
   useEffect(() => {
     dispatch(productList());
   }, []);
+
+  const productHandler = (product) => {
+    navigate("/productlist/productpage", { state: product });
+  };
+
+  const cartHandler = (item) => {
+    selectedProArray.push({ ...item, quantity: 1 });
+    setSelectedProArray(selectedProArray);
+    console.log(selectedProArray);
+    dispatch(homeCartListData(selectedProArray));
+  };
 
   return (
     <div>
@@ -59,12 +64,12 @@ const CategoryHomePage = (props) => {
           (data, i) => {
             return (
               <div key={i}>
-                <div className="container" onClick={() => productHandler(data)}>
+                <div className="container">
                   <div
                     className="card"
                     disabled={data.instock === 0 ? true : false}
                   >
-                    <div>
+                    <div onClick={() => productHandler(data)}>
                       <img
                         src={`${data.pic}`}
                         style={{
@@ -92,7 +97,7 @@ const CategoryHomePage = (props) => {
                         <button
                           type="button"
                           style={{ padding: "23px 30px 23px 30px" }}
-                          onClick={cartHandler}
+                          onClick={() => cartHandler(data)}
                           className="btn btn-primary position-relative"
                         >
                           Add to Cart

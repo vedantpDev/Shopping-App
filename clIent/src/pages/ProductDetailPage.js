@@ -13,12 +13,12 @@ const ProductDetailPage = () => {
   const { state } = useLocation();
   const [selectedProduct, SetselectedProduct] = useState({});
   const [disabledArray, setDisabledArray] = useState([]);
+  const [itemArray, setItemArray] = useState([]);
 
   useEffect(() => {
     if (state && Object.keys(state).length > 0) SetselectedProduct(state);
   }, [state]);
 
-  const [itemArray, setItemArray] = useState([]);
   const cartHandler = (id) => {
     itemArray.push({ ...selectedProduct, quantity: 1 });
     setItemArray(itemArray);

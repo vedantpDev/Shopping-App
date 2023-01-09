@@ -22,6 +22,13 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
+    case "HOME_CART_LIST": {
+      return {
+        ...state,
+        cartList: action.payload,
+      };
+    }
+
     case "DELETE_DATA": {
       return {
         ...state,

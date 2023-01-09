@@ -12,18 +12,13 @@ import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { cartList } = useSelector((store) => store.productDataReducer);
 
-  const [badge, setBadge] = useState(0);
+  const { cartList } = useSelector((store) => store.productDataReducer);
+  const { name } = useSelector((store) => store.userData);
+
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const { name } = useSelector((store) => store.userData);
-
-  useEffect(() => {
-    setBadge(cartList.length);
-  }, [cartList]);
 
   const logout = () => {
     dispatch(logOut());
@@ -102,7 +97,7 @@ const Header = () => {
             </span>
             Cart
             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-              {badge}
+              {cartList.length}
             </span>
           </button>
         </div>

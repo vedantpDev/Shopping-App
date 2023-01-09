@@ -50,6 +50,13 @@ export const cartListData = (data) => (dispatch) => {
   });
 };
 
+export const homeCartListData = (data) => (dispatch) => {
+  dispatch({
+    type: "HOME_CART_LIST",
+    payload: data,
+  });
+};
+
 export const deleteProduct = (id) => (dispatch) => {
   let storeData = Store.getState().productDataReducer.cartList;
   let removeData = storeData.filter((obj) => obj.id !== id);

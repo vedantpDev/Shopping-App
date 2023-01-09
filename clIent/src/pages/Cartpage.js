@@ -8,20 +8,21 @@ const Cartpage = () => {
   let sum = 0;
 
   const { cartList } = useSelector((store) => store.productDataReducer);
+
   const [cartListProduct, setCartListProduct] = useState([]);
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     setCartListProduct(cartList);
   }, [cartList]);
+  console.log(cartList);
 
   let instockArray = [];
   Array.from(cartListProduct).map((data, i) => {
     instockArray.push(data.instock);
   });
-
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
 
   const minusHandler = (i) => {
     cartListProduct[i].quantity = cartListProduct[i].quantity - 1;

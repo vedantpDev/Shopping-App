@@ -10,7 +10,8 @@ const Productpage = () => {
   const dispatch = useDispatch();
 
   const [category_List, setCategory_List] = useState([]);
-  const { categoryList, sub_Cat_Product } = useSelector(
+  const [subCatState, setSubCatState] = useState([]);
+  const { subCat, categoryList, sub_Cat_Product } = useSelector(
     (store) => store.productDataReducer
   );
 
@@ -22,16 +23,13 @@ const Productpage = () => {
     setCategory_List(categoryList);
   }, [categoryList]);
 
-  const [subCatState, setSubCatState] = useState([]);
+  useEffect(() => {
+    setSubCatState(subCat);
+  }, [subCat]);
 
   const catClickHandler = (id) => {
     dispatch(fetchSubCat(id));
   };
-  const { subCat } = useSelector((store) => store.productDataReducer);
-
-  useEffect(() => {
-    setSubCatState(subCat);
-  }, [subCat]);
 
   const subCatClickHandler = (subCatID) => {
     dispatch(subCatProduct(subCatID));
@@ -51,7 +49,7 @@ const Productpage = () => {
                   style={{ textDecoration: "none", color: "rgb(0 0 0)" }}
                   onClick={allProductList}
                 >
-                  All Product
+                  All
                 </Link>
               </div>
               {Array.from(category_List).map((data, i) => {
