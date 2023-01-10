@@ -96,4 +96,24 @@ app.get("/getSubCatProduct/:subCatId", (req, res) => {
   });
 });
 
+app.get("/getClotheBrand/:brandId/:subCatId", (req, res) => {
+  if (!req.params)
+    return res.status(400).send({
+      error: err,
+      message: "Please Provide Brand Id",
+    });
+  let q = `select * from productlist where brand_id = ${req.params.brandId} AND sub_cat_id = ${req.params.subCatId}`;
+  conn.query(q, (err, data) => {
+    if (err)
+      return res.status(400).send({
+        error: err,
+        message: "Fail API",
+      });
+    res.status(200).send({
+      data: data,
+      message: "Success",
+    });
+  });
+});
+
 app.listen(PORT, () => console.log("App Running on ", PORT));
