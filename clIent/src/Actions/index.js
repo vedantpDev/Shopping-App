@@ -43,56 +43,16 @@ export const logOut = () => (dispatch) => {
   });
 };
 
-export const filterClothes = (priceRange) => (dispatch) => {
-  debugger;
-  axios
-    .post("/clothesRange", priceRange)
-    .then((res) => {
-      dispatch({
-        type: "PRICE_RANGE_CLOTHES",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-export const filterGrocery = (priceRange) => (dispatch) => {
-  debugger;
-  axios
-    .post("/groceryRange", priceRange)
-    .then((res) => {
-      dispatch({
-        type: "PRICE_RANGE_GROCERY",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-export const filterMobile = (priceRange) => (dispatch) => {
-  axios
-    .post("/mobileRange", priceRange)
-    .then((res) => {
-      dispatch({
-        type: "PRICE_RANGE_MOBILE",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-export const filterToy = (priceRange) => (dispatch) => {
-  axios
-    .post("/toyRange", priceRange)
-    .then((res) => {
-      dispatch({
-        type: "PRICE_RANGE_TOY",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
-
 export const cartListData = (data) => (dispatch) => {
   dispatch({
     type: "CART_LIST",
+    payload: data,
+  });
+};
+
+export const homeCartListData = (data) => (dispatch) => {
+  dispatch({
+    type: "HOME_CART_LIST",
     payload: data,
   });
 };
@@ -110,7 +70,6 @@ export const updateProduct = (productList) => (dispatch) => {
   axios
     .put(`/updateProduct`, productList)
     .then((res) => {
-      console.log(res);
       dispatch({
         type: "UPDATE_LIST",
         payload: productList,

@@ -4,16 +4,16 @@ import { Link, Outlet } from "react-router-dom";
 import "../CSS/ProductPage.css";
 import { productCategory } from "../Actions";
 import { fetchSubCat } from "../Actions";
-import { useNavigate, useLocation } from "react-router-dom";
 import { subCatProduct } from "../Actions";
-import CategoryHomePage from "./CategoryHomePage";
 
 const Productpage = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [category_List, setCategory_List] = useState([]);
-  const { categoryList } = useSelector((store) => store.productDataReducer);
+  const [subCatState, setSubCatState] = useState([]);
+  const { subCat, categoryList, sub_Cat_Product } = useSelector(
+    (store) => store.productDataReducer
+  );
 
   useEffect(() => {
     dispatch(productCategory());
@@ -23,20 +23,20 @@ const Productpage = () => {
     setCategory_List(categoryList);
   }, [categoryList]);
 
-  const [subCatState, setSubCatState] = useState([]);
-
-  const catClickHandler = (id) => {
-    dispatch(fetchSubCat(id));
-    navigate("/productlist");
-  };
-  const { subCat } = useSelector((store) => store.productDataReducer);
-
   useEffect(() => {
     setSubCatState(subCat);
   }, [subCat]);
 
+  const catClickHandler = (id) => {
+    dispatch(fetchSubCat(id));
+  };
+
   const subCatClickHandler = (subCatID) => {
     dispatch(subCatProduct(subCatID));
+  };
+
+  const allProductList = () => {
+    sub_Cat_Product.length = 0;
   };
   return (
     <div>
@@ -44,7 +44,15 @@ const Productpage = () => {
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
-              {Array.from(categoryList).map((data, i) => {
+              <div style={{ paddingTop: "8px" }}>
+                <Link
+                  style={{ textDecoration: "none", color: "rgb(0 0 0)" }}
+                  onClick={allProductList}
+                >
+                  All
+                </Link>
+              </div>
+              {Array.from(category_List).map((data, i) => {
                 return (
                   <div key={i}>
                     <li className="nav-item dropdown">
@@ -69,7 +77,7 @@ const Productpage = () => {
                               <div key={j}>
                                 <Link
                                   className="dropdown-item"
-                                  href="#"
+                                  to="/productlist"
                                   onClick={() =>
                                     subCatClickHandler(subCatData.id)
                                   }

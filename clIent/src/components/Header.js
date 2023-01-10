@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../CSS/Header.css";
 import { Link } from "react-router-dom";
 import { logOut } from "../Actions";
@@ -8,18 +8,17 @@ import Avatar from "@mui/material/Avatar";
 import { deepOrange } from "@mui/material/colors";
 import UserDetail from "../pages/UserDetail";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import { cartListData } from "../Actions";
 
-const Header = ({ cartObj, badge }) => {
-  console.log("inside the Header", badge);
+const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const { cartList } = useSelector((store) => store.productDataReducer);
+  const { name } = useSelector((store) => store.userData);
 
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const { name } = useSelector((store) => store.userData);
 
   const logout = () => {
     dispatch(logOut());
@@ -32,7 +31,6 @@ const Header = ({ cartObj, badge }) => {
 
   const purchaseHandler = (e) => {
     e.preventDefault();
-    dispatch(cartListData(cartObj));
     navigate("/cartlist");
   };
   return (
@@ -80,6 +78,28 @@ const Header = ({ cartObj, badge }) => {
               </li>
             </ul>
           </div>
+        </div>
+        <div
+          style={{
+            textAlign: "right",
+            marginTop: "3px",
+            marginRight: "39px",
+          }}
+        >
+          <button
+            type="button"
+            onClick={purchaseHandler}
+            className="btn btn-primary position-relative"
+            style={{ display: "flex" }}
+          >
+            <span style={{ marginRight: "10px" }}>
+              <AddShoppingCartIcon />
+            </span>
+            Cart
+            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+              {cartList.length}
+            </span>
+          </button>
         </div>
 
         <div

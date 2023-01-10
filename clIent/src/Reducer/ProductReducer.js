@@ -1,6 +1,3 @@
-import { cardClasses } from "@mui/material";
-
-// import { useSelector } from "react-redux";
 const initialState = {
   data: [],
   cartList: [],
@@ -10,7 +7,6 @@ const initialState = {
 };
 
 const ProductReducer = (state = initialState, action) => {
-  // const { data } = useSelector((store) => store.productDataReducer);
   switch (action.type) {
     case "PRODUCT_LIST": {
       return {
@@ -19,34 +15,14 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
-    case "PRICE_RANGE_CLOTHES": {
-      return {
-        ...state,
-        clothesList: action.payload,
-      };
-    }
-    case "PRICE_RANGE_GROCERY": {
-      return {
-        ...state,
-        groceryList: action.payload,
-      };
-    }
-
-    case "PRICE_RANGE_MOBILE": {
-      return {
-        ...state,
-        mobileList: action.payload,
-      };
-    }
-
-    case "PRICE_RANGE_TOY": {
-      return {
-        ...state,
-        toyList: action.payload,
-      };
-    }
-
     case "CART_LIST": {
+      return {
+        ...state,
+        cartList: [...state.cartList, action.payload[0]],
+      };
+    }
+
+    case "HOME_CART_LIST": {
       return {
         ...state,
         cartList: action.payload,
@@ -68,7 +44,6 @@ const ProductReducer = (state = initialState, action) => {
     }
 
     case "UPDATE_LIST": {
-      debugger;
       let productData = state.data;
       let cartArray = action.payload;
       // cartArray.map((data, i) => {
@@ -78,6 +53,7 @@ const ProductReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload,
+        cartList: [],
       };
     }
 
@@ -108,7 +84,3 @@ const ProductReducer = (state = initialState, action) => {
 };
 
 export default ProductReducer;
-
-// productData[index] = { ...cartArray[index] };
-//         productData = [...productData];
-//         console.log("All Data", productData);

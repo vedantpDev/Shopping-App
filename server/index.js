@@ -25,26 +25,6 @@ app.get("/productlist", (req, res) => {
 app.put(`/updateProduct`, (req, res) => {
   let arrayList = req.body;
   if (!req.body) return new Error("Please Provide Data");
-  // let quries = "";
-
-  // arrayList.forEach((data) => {
-  //   quries += mysql.format(
-  //     `update productlist set name ='${data.name}' , price=${
-  //       data.price
-  //     }, instock=${data.instock - data.quantity}, pic='${data.pic}' where id=${
-  //       data.id
-  //     } `
-  //   );
-  // });
-
-  // conn.query(quries, (err, data) => {
-  //   if (err) return new Error(err);
-  //   return res.status(200).send({
-  //     message: "Success",
-  //     data: data,
-  //   });
-  // });
-  // Promise.all(
   const myPromises = arrayList.map((data, i) => {
     return new Promise((resolve, reject) => {
       let q = `update productlist set name ='${data.name}' , price=${

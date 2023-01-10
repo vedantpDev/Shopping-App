@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { updateProduct } from "../Actions";
 
 const Paymentpage = (props) => {
@@ -12,7 +11,6 @@ const Paymentpage = (props) => {
   const { cartList } = useSelector((store) => store.productDataReducer);
   const navigate = useNavigate();
 
-  const [productData, SetproductData] = useState([]);
   const [billTable, setBillTable] = useState([]);
 
   useEffect(() => {
@@ -20,7 +18,7 @@ const Paymentpage = (props) => {
   }, [cartList]);
 
   let sum = 0;
-  billTable.map((data, i) => {
+  Array.from(billTable).map((data, i) => {
     sum += data.price * 80 * data.quantity;
   });
 

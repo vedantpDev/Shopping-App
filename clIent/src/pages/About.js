@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 
 const About = () => {
   const { name } = useSelector((store) => store.userData);
+  const { product } = useSelector((store) => store.productDataReducer);
+  console.log(product);
   return <div>About</div>;
 };
 

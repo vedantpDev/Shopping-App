@@ -2,28 +2,27 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct } from "../Actions";
 import Paymentpage from "./Paymentpage";
-import { cartListData } from "../Actions";
-import { updateProduct } from "../Actions";
 
 const Cartpage = () => {
   const dispatch = useDispatch();
   let sum = 0;
 
   const { cartList } = useSelector((store) => store.productDataReducer);
+
   const [cartListProduct, setCartListProduct] = useState([]);
-
-  useEffect(() => {
-    setCartListProduct([...cartList]);
-  }, [cartList]);
-
-  let instockArray = [];
-  cartListProduct.map((data, i) => {
-    instockArray.push(data.instock);
-  });
-
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  useEffect(() => {
+    setCartListProduct(cartList);
+  }, [cartList]);
+  console.log(cartList);
+
+  let instockArray = [];
+  Array.from(cartListProduct).map((data, i) => {
+    instockArray.push(data.instock);
+  });
 
   const minusHandler = (i) => {
     cartListProduct[i].quantity = cartListProduct[i].quantity - 1;
@@ -35,7 +34,7 @@ const Cartpage = () => {
     setCartListProduct([...cartListProduct]);
   };
 
-  cartListProduct.map((data, i) => {
+  Array.from(cartListProduct).map((data, i) => {
     sum += data.price * 80 * data.quantity;
   });
 
@@ -45,7 +44,6 @@ const Cartpage = () => {
 
   const buyHandler = () => {
     handleShow();
-    dispatch(cartListData(cartListProduct));
   };
   return (
     <div className="container" style={{ marginTop: "15px" }}>
@@ -60,14 +58,14 @@ const Cartpage = () => {
           </tr>
         </thead>
         <tbody>
-          {cartList.length === 0 ? (
+          {cartListProduct.length === 0 ? (
             <tr style={{ textAlign: "center", fontSize: "26px", color: "red" }}>
               <td colSpan={5} style={{ color: "red" }}>
                 Please Select Item
               </td>
             </tr>
           ) : (
-            Array.from(cartListProduct).map((data, i) => {
+            cartListProduct.map((data, i) => {
               return (
                 <tr key={i} style={{ textAlign: "center" }}>
                   <th>{data.id}</th>
