@@ -96,6 +96,21 @@ app.get("/getSubCatProduct/:subCatId", (req, res) => {
   });
 });
 
+app.get("/getBrand", (req, res) => {
+  let q = `select * from clothes_brand`;
+  conn.query(q, (err, data) => {
+    if (err)
+      return res.status(400).send({
+        error: err,
+        message: "API Fail",
+      });
+    res.status(200).send({
+      data: data,
+      message: "Success",
+    });
+  });
+});
+
 app.get("/getClotheBrand/:brandId/:subCatId", (req, res) => {
   if (!req.params)
     return res.status(400).send({

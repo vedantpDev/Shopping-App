@@ -17,7 +17,6 @@ const Cartpage = () => {
   useEffect(() => {
     setCartListProduct(cartList);
   }, [cartList]);
-  console.log(cartList);
 
   let instockArray = [];
   Array.from(cartListProduct).map((data, i) => {

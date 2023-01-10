@@ -5,6 +5,7 @@ import "../CSS/ProductPage.css";
 import { productCategory } from "../Actions";
 import { fetchSubCat } from "../Actions";
 import { subCatProduct } from "../Actions";
+import { subCatIdFilterPro } from "../Actions";
 
 const Productpage = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const Productpage = () => {
 
   const subCatClickHandler = (subCatID) => {
     dispatch(subCatProduct(subCatID));
+    dispatch(subCatIdFilterPro(subCatID));
   };
 
   const allProductList = () => {
@@ -72,7 +74,7 @@ const Productpage = () => {
                         aria-labelledby="navbarDropdown"
                       >
                         <li>
-                          {subCatState.map((subCatData, j) => {
+                          {Array.from(subCatState).map((subCatData, j) => {
                             return (
                               <div key={j}>
                                 <Link
