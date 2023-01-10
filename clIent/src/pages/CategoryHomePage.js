@@ -15,7 +15,7 @@ const CategoryHomePage = (props) => {
   const [selectedProArray, setSelectedProArray] = useState([]);
   const [category_List, setCategory_List] = useState([]);
 
-  const { categoryList, sub_Cat_Product, data } = useSelector(
+  const { categoryList, sub_Cat_Product, data, storeSubCatId } = useSelector(
     (store) => store.productDataReducer
   );
 
