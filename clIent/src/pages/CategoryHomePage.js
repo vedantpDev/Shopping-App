@@ -52,64 +52,71 @@ const CategoryHomePage = (props) => {
 
   return (
     <div>
-      <div
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          alignItems: "flex-start",
-        }}
-      >
-        {Array.from(subCatList.length > 0 ? subCatList : allProduct).map(
-          (data, i) => {
-            return (
-              <div key={i}>
-                <div className="container">
-                  <div
-                    className="card"
-                    disabled={data.instock === 0 ? true : false}
-                  >
-                    <div onClick={() => productHandler(data)}>
-                      <img
-                        src={`${data.pic}`}
-                        style={{
-                          height: "300px",
-                          width: "300px",
-                          marginTop: "22px",
-                        }}
-                        className="card-img-top"
-                        alt="..."
-                      />
-                    </div>
-                    <div className="card-body">
-                      <h5 className="card-title">{`${data.name}`}</h5>
+      <div className="row">
+        <div className="col-2" style={{ border: "1px solid black" }}>
+          Hello
+        </div>
+        <div className="col-10" style={{ border: "1px solid black" }}>
+          <div
+            style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              alignItems: "flex-start",
+            }}
+          >
+            {Array.from(subCatList.length > 0 ? subCatList : allProduct).map(
+              (data, i) => {
+                return (
+                  <div key={i}>
+                    <div className="container">
                       <div
-                        style={{
-                          margin: "14px",
-                          color: "green",
-                          fontSize: "18px",
-                        }}
-                      >{`Price : ₹ ${data.price * 80}`}</div>
-                      <div
-                        style={{ margin: "14px", fontSize: "15px" }}
-                      >{`InStock : ${data.instock}`}</div>
-                      <div>
-                        <button
-                          type="button"
-                          style={{ padding: "23px 30px 23px 30px" }}
-                          onClick={() => cartHandler(data)}
-                          className="btn btn-primary position-relative"
-                        >
-                          Add to Cart
-                        </button>
+                        className="card"
+                        disabled={data.instock === 0 ? true : false}
+                      >
+                        <div onClick={() => productHandler(data)}>
+                          <img
+                            src={`${data.pic}`}
+                            style={{
+                              height: "300px",
+                              width: "300px",
+                              marginTop: "22px",
+                            }}
+                            className="card-img-top"
+                            alt="..."
+                          />
+                        </div>
+                        <div className="card-body">
+                          <h5 className="card-title">{`${data.name}`}</h5>
+                          <div
+                            style={{
+                              margin: "14px",
+                              color: "green",
+                              fontSize: "18px",
+                            }}
+                          >{`Price : ₹ ${data.price * 80}`}</div>
+                          <div
+                            style={{ margin: "14px", fontSize: "15px" }}
+                          >{`InStock : ${data.instock}`}</div>
+                          <div>
+                            <button
+                              type="button"
+                              style={{ padding: "23px 30px 23px 30px" }}
+                              onClick={() => cartHandler(data)}
+                              className="btn btn-primary position-relative"
+                            >
+                              Add to Cart
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            );
-          }
-        )}
+                );
+              }
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
