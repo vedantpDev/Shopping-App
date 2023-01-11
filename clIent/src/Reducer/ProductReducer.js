@@ -6,7 +6,7 @@ const initialState = {
   sub_Cat_Product: [],
   storeSubCatId: 0,
   cloth_brands: [],
-  filteredClothes: [],
+  filterProductData: [],
 };
 
 const ProductReducer = (state = initialState, action) => {
@@ -95,10 +95,10 @@ const ProductReducer = (state = initialState, action) => {
       };
     }
 
-    case "FILTERED_CLOTHES": {
+    case "FILTER_PRODUCT": {
       return {
         ...state,
-        filteredClothes: action.payload,
+        filterProductData: action.payload,
       };
     }
 

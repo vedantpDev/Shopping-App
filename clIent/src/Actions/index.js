@@ -133,14 +133,19 @@ export const getBrand = () => (dispatch) => {
     .catch((err) => console.log(err));
 };
 
-export const filterProduct = (brandId, subCatId) => (dispatch) => {
-  axios
-    .get(`/getClotheBrand/${brandId}/${subCatId}`)
-    .then((res) => {
-      dispatch({
-        type: "FILTERED_CLOTHES",
-        payload: res.data.data,
-      });
-    })
-    .catch((err) => console.log(err));
-};
+export const filterProduct =
+  (subCatId, firstValue, lastValue, arr) => (dispatch) => {
+    axios
+      .post(`/filterData/${subCatId}`, {
+        min: firstValue / 80,
+        max: lastValue / 80,
+        array: arr,
+      })
+      .then((res) => {
+        dispatch({
+          type: "FILTER_PRODUCT",
+          payload: res.data.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };

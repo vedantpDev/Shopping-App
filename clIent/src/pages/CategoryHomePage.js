@@ -6,6 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { productCategory } from "../Actions";
 import { homeCartListData } from "../Actions";
 import { getBrand } from "../Actions";
+// import { filterProduct } from "../Actions";
+// import { priceRangeAction } from "../Actions";
+import "../CSS/CategoryHome.css";
 import { filterProduct } from "../Actions";
 
 const CategoryHomePage = (props) => {
@@ -24,9 +27,8 @@ const CategoryHomePage = (props) => {
     data,
     cloth_brands,
     storeSubCatId,
-    filteredClothes,
+    filterProductData,
   } = useSelector((store) => store.productDataReducer);
-
   useEffect(() => {
     dispatch(productCategory());
   }, []);
@@ -36,8 +38,8 @@ const CategoryHomePage = (props) => {
   }, [categoryList]);
 
   useEffect(() => {
-    setSubCatList(filteredClothes);
-  }, [filteredClothes]);
+    setSubCatList(filterProductData);
+  }, [filterProductData]);
 
   useEffect(() => {
     setSubCatList(sub_Cat_Product);
@@ -68,8 +70,44 @@ const CategoryHomePage = (props) => {
     dispatch(homeCartListData(selectedProArray));
   };
 
+  const [brandArray, setBrandArray] = useState([]);
   const brandHandler = (id) => {
-    dispatch(filterProduct(id, storeSubCatId));
+    brandArray.push(id);
+
+    // dispatch(filterProduct(id, storeSubCatId));
+  };
+
+  // const [min, setMin] = useState(0);
+  // const [max, setMax] = useState(0);
+  // const [sum, setSum] = useState(0);
+  // useEffect(() => {
+  //   for (let i = 0; i < subCatList.length; i++) {
+  //     if (subCatList[i]?.price > subCatList[i + 1]?.price) {
+  //       setMin(subCatList[i + 1].price);
+  //     }
+  //     if (subCatList[i]?.price < subCatList[i + 1]?.price) {
+  //       setMax(subCatList[i + 1].price);
+  //     }
+  //   }
+  //   setSum((min + max) * 80);
+  // }, [sub_Cat_Product]);
+
+  // const [checkBoxVar, setCheckBoxVar] = useState(false);
+  // useEffect(() => {
+  //   setSubCatList(filterProductData);
+  // }, [filterProductData]);
+
+  const [min, setMin] = useState(0);
+  const [max, setMax] = useState(0);
+  const changeValueHandler = (startVale, endValue) => {
+    setMin(startVale);
+    setMax(endValue);
+  };
+
+  const fetchFilterData = () => {
+    setBrandArray(brandArray);
+    dispatch(filterProduct(storeSubCatId, min, max, brandArray));
+    setBrandArray([]);
   };
 
   return (
@@ -82,25 +120,122 @@ const CategoryHomePage = (props) => {
           <div
             style={{ fontSize: "21px", textAlign: "center", marginTop: "63px" }}
           >
-            <strong>Clothing Brands</strong>
+            <strong>Brands</strong>
           </div>
-          <ul className="nav flex-column">
-            {brands.map((data, i) => {
-              return (
-                <div key={i}>
-                  <li className="nav-item">
-                    <Link
-                      onClick={() => brandHandler(data.id)}
-                      style={{ color: "black", textAlign: "center" }}
-                      className="nav-link "
-                    >
-                      {data.company}
-                    </Link>
-                  </li>
-                </div>
-              );
-            })}
-          </ul>
+          <div>
+            <ul className="nav flex-column">
+              {brands.map((data, i) => {
+                return (
+                  <div key={i}>
+                    <div style={{ padding: "5px", textAlign: "center" }}>
+                      <ul style={{ float: "left" }}>
+                        <>
+                          <input
+                            type="checkbox"
+                            id={`check${i}`}
+                            name={`option${i}`}
+                            onClick={() => brandHandler(data.id)}
+                          />
+                          <span style={{ marginLeft: "21px" }}>
+                            {data.company}
+                          </span>
+                        </>
+                      </ul>
+                    </div>
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "21px",
+                textAlign: "center",
+                marginTop: "63px",
+              }}
+            >
+              <strong>Price</strong>
+            </div>
+
+            <ul style={{ textAlign: "center", float: "left" }}>
+              <div style={{ padding: "5px" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(0, 500)}
+                />
+                <label htmlFor="age1">0 - 500</label>
+              </div>
+              <div style={{ padding: "5px", float: "left" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(500, 1000)}
+                />
+                <label htmlFor="age1">500 - 1000</label>
+              </div>
+              <div style={{ padding: "5px", float: "left" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(1000, 2000)}
+                />
+                <label htmlFor="age1">1000 - 2000</label>
+              </div>
+              <div style={{ padding: "5px", float: "left" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(2000, 3000)}
+                />
+                <label htmlFor="age1">2000 - 3000</label>
+              </div>
+              <div style={{ padding: "5px", float: "left" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(3000, 4000)}
+                />
+                <label htmlFor="age1">3000 - 4000</label>
+              </div>
+              <div style={{ padding: "5px", float: "left" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(4000, 5000)}
+                />
+                <label htmlFor="age1">4000 - 5000</label>
+              </div>
+              <div style={{ padding: "5px", float: "left" }}>
+                <input
+                  type="radio"
+                  id="age1"
+                  name="age"
+                  onChange={() => changeValueHandler(5000, 1000000)}
+                />
+                <label htmlFor="age1">5000 +</label>
+              </div>
+            </ul>
+            <div>
+              <div>
+                <button
+                  type="button"
+                  style={{ textAlign: "center", marginTop: "15px" }}
+                  onClick={fetchFilterData}
+                  className="btn btn-primary position-relative"
+                >
+                  Apply
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div className="col-10">
           <div
@@ -111,65 +246,55 @@ const CategoryHomePage = (props) => {
               alignItems: "flex-start",
             }}
           >
-            {subCatList.length === 0 ? (
-              <div
-                style={{ color: "red", marginTop: "20px", fontSize: "x-large" }}
-              >
-                Data Not Available
-              </div>
-            ) : (
-              <>
-                {Array.from(
-                  subCatList.length > 0 ? subCatList : allProduct
-                ).map((data, i) => {
-                  return (
-                    <div key={i}>
-                      <div className="container">
-                        <div
-                          className="card"
-                          disabled={data.instock === 0 ? true : false}
-                        >
-                          <div onClick={() => productHandler(data)}>
-                            <img
-                              src={`${data.pic}`}
-                              style={{
-                                height: "300px",
-                                width: "300px",
-                                marginTop: "22px",
-                              }}
-                              className="card-img-top"
-                              alt="..."
-                            />
-                          </div>
-                          <div className="card-body">
-                            <h5 className="card-title">{`${data.name}`}</h5>
-                            <div
-                              style={{
-                                margin: "14px",
-                                color: "green",
-                                fontSize: "18px",
-                              }}
-                            >{`Price : ₹ ${data.price * 80}`}</div>
-                            <div
-                              style={{ margin: "14px", fontSize: "15px" }}
-                            >{`InStock : ${data.instock}`}</div>
-                            <div>
-                              <button
-                                type="button"
-                                style={{ padding: "23px 30px 23px 30px" }}
-                                onClick={() => cartHandler(data)}
-                                className="btn btn-primary position-relative"
-                              >
-                                Add to Cart
-                              </button>
-                            </div>
+            {Array.from(subCatList?.length > 0 ? subCatList : allProduct).map(
+              (data, i) => {
+                return (
+                  <div key={i}>
+                    <div className="container">
+                      <div
+                        className="card"
+                        disabled={data.instock === 0 ? true : false}
+                      >
+                        <div onClick={() => productHandler(data)}>
+                          <img
+                            src={`${data.pic}`}
+                            style={{
+                              height: "300px",
+                              width: "300px",
+                              marginTop: "22px",
+                            }}
+                            className="card-img-top"
+                            alt="..."
+                          />
+                        </div>
+                        <div className="card-body">
+                          <h5 className="card-title">{`${data.name}`}</h5>
+                          <div
+                            style={{
+                              margin: "14px",
+                              color: "green",
+                              fontSize: "18px",
+                            }}
+                          >{`Price : ₹ ${data.price * 80}`}</div>
+                          <div
+                            style={{ margin: "14px", fontSize: "15px" }}
+                          >{`InStock : ${data.instock}`}</div>
+                          <div>
+                            <button
+                              type="button"
+                              style={{ padding: "23px 30px 23px 30px" }}
+                              onClick={() => cartHandler(data)}
+                              className="btn btn-primary position-relative"
+                            >
+                              Add to Cart
+                            </button>
                           </div>
                         </div>
                       </div>
                     </div>
-                  );
-                })}
-              </>
+                  </div>
+                );
+              }
             )}
           </div>
         </div>
