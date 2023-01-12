@@ -167,7 +167,7 @@ app.post("/filterData/:subCatId", (req, res) => {
   } else {
     q1 = `brand_id in (${array})`;
   }
-
+  // this is commit
   let q = `select * from productlist where ${q1} AND sub_cat_id = ${req.params.subCatId} `;
   conn.query(q, (err, data) => {
     if (err)
