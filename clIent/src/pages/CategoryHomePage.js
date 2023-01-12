@@ -107,7 +107,6 @@ const CategoryHomePage = (props) => {
   const fetchFilterData = () => {
     setBrandArray(brandArray);
     dispatch(filterProduct(storeSubCatId, min, max, brandArray));
-    setBrandArray([]);
   };
 
   return (
@@ -122,7 +121,7 @@ const CategoryHomePage = (props) => {
           >
             <strong>Brands</strong>
           </div>
-          <div>
+          <div style={{ margin: "auto", width: "72%" }}>
             <ul className="nav flex-column">
               {brands.map((data, i) => {
                 return (
@@ -157,86 +156,100 @@ const CategoryHomePage = (props) => {
             >
               <strong>Price</strong>
             </div>
-
-            <ul style={{ textAlign: "center", float: "left" }}>
-              <div style={{ padding: "5px" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(0, 500)}
-                />
-                <label htmlFor="age1">0 - 500</label>
-              </div>
-              <div style={{ padding: "5px", float: "left" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(500, 1000)}
-                />
-                <label htmlFor="age1">500 - 1000</label>
-              </div>
-              <div style={{ padding: "5px", float: "left" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(1000, 2000)}
-                />
-                <label htmlFor="age1">1000 - 2000</label>
-              </div>
-              <div style={{ padding: "5px", float: "left" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(2000, 3000)}
-                />
-                <label htmlFor="age1">2000 - 3000</label>
-              </div>
-              <div style={{ padding: "5px", float: "left" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(3000, 4000)}
-                />
-                <label htmlFor="age1">3000 - 4000</label>
-              </div>
-              <div style={{ padding: "5px", float: "left" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(4000, 5000)}
-                />
-                <label htmlFor="age1">4000 - 5000</label>
-              </div>
-              <div style={{ padding: "5px", float: "left" }}>
-                <input
-                  type="radio"
-                  id="age1"
-                  name="age"
-                  onChange={() => changeValueHandler(5000, 1000000)}
-                />
-                <label htmlFor="age1">5000 +</label>
-              </div>
-            </ul>
-            <div>
-              <div>
-                <button
-                  type="button"
-                  style={{ textAlign: "center", marginTop: "15px" }}
-                  onClick={fetchFilterData}
-                  className="btn btn-primary position-relative"
-                >
-                  Apply
-                </button>
-              </div>
+            <div className="container" style={{ height: "241px" }}>
+              <ul style={{ textAlign: "center" }}>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(0, 500)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    0 - 500
+                  </label>
+                </div>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(500, 1000)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    500 - 1000
+                  </label>
+                </div>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(1000, 2000)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    1000 - 2000
+                  </label>
+                </div>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(2000, 3000)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    2000 - 3000
+                  </label>
+                </div>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(3000, 4000)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    3000 - 4000
+                  </label>
+                </div>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(4000, 5000)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    4000 - 5000
+                  </label>
+                </div>
+                <div style={{ padding: "5px", float: "left" }}>
+                  <input
+                    type="radio"
+                    id="age1"
+                    name="age"
+                    onChange={() => changeValueHandler(5000, 1000000)}
+                  />
+                  <label style={{ marginLeft: "21px" }} htmlFor="age1">
+                    5000 +
+                  </label>
+                </div>
+              </ul>
             </div>
           </div>
+          <div style={{ textAlign: "center" }}>
+            <button
+              type="button"
+              style={{ textAlign: "center", marginTop: "15px" }}
+              onClick={fetchFilterData}
+              className="btn btn-primary position-relative"
+            >
+              Apply
+            </button>
+          </div>
         </div>
+
         <div className="col-10">
           <div
             style={{

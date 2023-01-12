@@ -169,7 +169,6 @@ app.post("/filterData/:subCatId", (req, res) => {
   }
 
   let q = `select * from productlist where ${q1} AND sub_cat_id = ${req.params.subCatId} `;
-  console.log(q);
   conn.query(q, (err, data) => {
     if (err)
       return res.status(400).send({
