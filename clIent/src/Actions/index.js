@@ -113,3 +113,46 @@ export const subCatProduct = (subCatId) => (dispatch) => {
     })
     .catch((err) => console.log("Error ", err));
 };
+
+export const subCatIdFilterPro = (id) => (dispatch) => {
+  dispatch({
+    type: "STORE_SUB_CAT_ID",
+    payload: id,
+  });
+};
+
+export const getBrand = () => (dispatch) => {
+  axios
+    .get("/getBrand")
+    .then((res) => {
+      dispatch({
+        type: "BRAND_NAME",
+        payload: res.data.data,
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const filterProduct =
+  (subCatId, firstValue, lastValue, arr) => (dispatch) => {
+    axios
+      .post(`/filterData/${subCatId}`, {
+        min: firstValue / 80,
+        max: lastValue / 80,
+        array: arr,
+      })
+      .then((res) => {
+        dispatch({
+          type: "FILTER_PRODUCT",
+          payload: res.data.data,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+export const allProductData = (data) => (dispatch) => {
+  dispatch({
+    type: "PRINT_ALL_PRODUCT",
+    payload: data,
+  });
+};

@@ -1,10 +1,6 @@
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React from "react";
 
 const About = () => {
-  const { name } = useSelector((store) => store.userData);
-  const { product } = useSelector((store) => store.productDataReducer);
-  console.log(product);
   return <div>About</div>;
 };
 

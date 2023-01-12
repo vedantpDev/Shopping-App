@@ -4,6 +4,10 @@ const initialState = {
   categoryList: [],
   subCat: [],
   sub_Cat_Product: [],
+  storeSubCatId: 0,
+  cloth_brands: [],
+  filterProductData: [],
+  allProduct: [],
 };
 
 const ProductReducer = (state = initialState, action) => {
@@ -75,6 +79,34 @@ const ProductReducer = (state = initialState, action) => {
       return {
         ...state,
         sub_Cat_Product: action.payload,
+      };
+    }
+
+    case "STORE_SUB_CAT_ID": {
+      return {
+        ...state,
+        storeSubCatId: action.payload,
+      };
+    }
+
+    case "BRAND_NAME": {
+      return {
+        ...state,
+        cloth_brands: action.payload,
+      };
+    }
+
+    case "FILTER_PRODUCT": {
+      return {
+        ...state,
+        filterProductData: action.payload,
+      };
+    }
+
+    case "PRINT_ALL_PRODUCT": {
+      return {
+        ...state,
+        allProduct: action.payload,
       };
     }
 
