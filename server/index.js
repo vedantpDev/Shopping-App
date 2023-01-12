@@ -162,12 +162,12 @@ app.post("/filterData/:subCatId", (req, res) => {
   if (min >= 0 && max > 0) {
     q1 = `(price BETWEEN ${min} AND ${max}) `;
   }
-  if (array.length > 0) {
-    q1 = q1 + `AND brand_id in (${array})`;
+  if (q1.length > 0) {
+    q1 = q1 + ` AND brand_id in (${array})`;
   } else {
-    q1 = `brand_id in (${array})`;
+    q1 = ` brand_id in (${array})`;
   }
-  // this is commit
+
   let q = `select * from productlist where ${q1} AND sub_cat_id = ${req.params.subCatId} `;
   conn.query(q, (err, data) => {
     if (err)
