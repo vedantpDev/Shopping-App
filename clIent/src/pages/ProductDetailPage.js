@@ -45,19 +45,7 @@ const ProductDetailPage = () => {
               <strong>Instock</strong> : {selectedProduct?.instock}
             </div>
             <div className="description-product">
-              <strong>Detail</strong> : Lorem, ipsum dolor sit amet consectetur
-              adipisicing elit. Quo, est ipsam nostrum ea adipisci esse
-              voluptatem cumque unde fugit cum quisquam. Nihil aliquid
-              praesentium odit, ipsum officiis laudantium omnis ducimus, tenetur
-              a voluptatibus cupiditate neque. Voluptatum asperiores animi qui.
-              Voluptatem accusantium quidem nemo perferendis officia reiciendis
-              quasi sed delectus voluptatum placeat dolor iure eius laborum
-              cupiditate amet, eos hic atque inventore aliquam commodi ea
-              quibusdam nihil impedit expedita. Incidunt ipsam aut, voluptate
-              totam sapiente in minus autem modi ab quam assumenda a
-              perspiciatis molestias et. Cumque autem natus ipsam harum
-              reprehenderit voluptates consequuntur perferendis, excepturi
-              possimus, tempora repellendus rem ipsa.
+              <strong>Detail</strong> : {selectedProduct?.description}
             </div>
             <div>
               <Link

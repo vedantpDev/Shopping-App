@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { productList } from "../Actions";
 import "../CSS/ProductPage.css";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { productCategory } from "../Actions";
 import { homeCartListData } from "../Actions";
 import { getBrand } from "../Actions";
-// import { filterProduct } from "../Actions";
-// import { priceRangeAction } from "../Actions";
 import "../CSS/CategoryHome.css";
 import { filterProduct } from "../Actions";
 
@@ -16,7 +14,7 @@ const CategoryHomePage = (props) => {
   const navigate = useNavigate();
 
   const [subCatList, setSubCatList] = useState([]);
-  const [allProduct, setAllProduct] = useState([]);
+  // const [allProduct, setAllProduct] = useState([]);
   const [selectedProArray, setSelectedProArray] = useState([]);
   const [category_List, setCategory_List] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -28,6 +26,7 @@ const CategoryHomePage = (props) => {
     cloth_brands,
     storeSubCatId,
     filterProductData,
+    allProduct,
   } = useSelector((store) => store.productDataReducer);
   useEffect(() => {
     dispatch(productCategory());
@@ -46,8 +45,12 @@ const CategoryHomePage = (props) => {
   }, [sub_Cat_Product]);
 
   useEffect(() => {
-    setAllProduct(data);
+    setSubCatList(data);
   }, [data]);
+
+  useEffect(() => {
+    setSubCatList(allProduct);
+  }, [allProduct?.length > 0]);
 
   useEffect(() => {
     dispatch(productList());
@@ -71,31 +74,13 @@ const CategoryHomePage = (props) => {
   };
 
   const [brandArray, setBrandArray] = useState([]);
-  const brandHandler = (id) => {
-    brandArray.push(id);
-
-    // dispatch(filterProduct(id, storeSubCatId));
+  const brandHandler = (e, id, index) => {
+    if (e.target.checked) {
+      brandArray.push(id);
+    } else {
+      brandArray.splice(index, 1);
+    }
   };
-
-  // const [min, setMin] = useState(0);
-  // const [max, setMax] = useState(0);
-  // const [sum, setSum] = useState(0);
-  // useEffect(() => {
-  //   for (let i = 0; i < subCatList.length; i++) {
-  //     if (subCatList[i]?.price > subCatList[i + 1]?.price) {
-  //       setMin(subCatList[i + 1].price);
-  //     }
-  //     if (subCatList[i]?.price < subCatList[i + 1]?.price) {
-  //       setMax(subCatList[i + 1].price);
-  //     }
-  //   }
-  //   setSum((min + max) * 80);
-  // }, [sub_Cat_Product]);
-
-  // const [checkBoxVar, setCheckBoxVar] = useState(false);
-  // useEffect(() => {
-  //   setSubCatList(filterProductData);
-  // }, [filterProductData]);
 
   const [min, setMin] = useState(0);
   const [max, setMax] = useState(0);
@@ -131,9 +116,9 @@ const CategoryHomePage = (props) => {
                         <>
                           <input
                             type="checkbox"
-                            id={`check${i}`}
-                            name={`option${i}`}
-                            onClick={() => brandHandler(data.id)}
+                            id={`check${i + 1}`}
+                            name={`option${i + 1}`}
+                            onClick={(e) => brandHandler(e, data.id, i)}
                           />
                           <span style={{ marginLeft: "21px" }}>
                             {data.company}
@@ -259,56 +244,54 @@ const CategoryHomePage = (props) => {
               alignItems: "flex-start",
             }}
           >
-            {Array.from(subCatList?.length > 0 ? subCatList : allProduct).map(
-              (data, i) => {
-                return (
-                  <div key={i}>
-                    <div className="container">
-                      <div
-                        className="card"
-                        disabled={data.instock === 0 ? true : false}
-                      >
-                        <div onClick={() => productHandler(data)}>
-                          <img
-                            src={`${data.pic}`}
-                            style={{
-                              height: "300px",
-                              width: "300px",
-                              marginTop: "22px",
-                            }}
-                            className="card-img-top"
-                            alt="..."
-                          />
-                        </div>
-                        <div className="card-body">
-                          <h5 className="card-title">{`${data.name}`}</h5>
-                          <div
-                            style={{
-                              margin: "14px",
-                              color: "green",
-                              fontSize: "18px",
-                            }}
-                          >{`Price : ₹ ${data.price * 80}`}</div>
-                          <div
-                            style={{ margin: "14px", fontSize: "15px" }}
-                          >{`InStock : ${data.instock}`}</div>
-                          <div>
-                            <button
-                              type="button"
-                              style={{ padding: "23px 30px 23px 30px" }}
-                              onClick={() => cartHandler(data)}
-                              className="btn btn-primary position-relative"
-                            >
-                              Add to Cart
-                            </button>
-                          </div>
+            {Array.from(subCatList).map((data, i) => {
+              return (
+                <div key={i}>
+                  <div className="container">
+                    <div
+                      className="card"
+                      disabled={data.instock === 0 ? true : false}
+                    >
+                      <div onClick={() => productHandler(data)}>
+                        <img
+                          src={`${data.pic}`}
+                          style={{
+                            height: "300px",
+                            width: "300px",
+                            marginTop: "22px",
+                          }}
+                          className="card-img-top"
+                          alt="..."
+                        />
+                      </div>
+                      <div className="card-body">
+                        <h5 className="card-title">{`${data.name}`}</h5>
+                        <div
+                          style={{
+                            margin: "14px",
+                            color: "green",
+                            fontSize: "18px",
+                          }}
+                        >{`Price : ₹ ${data.price * 80}`}</div>
+                        <div
+                          style={{ margin: "14px", fontSize: "15px" }}
+                        >{`InStock : ${data.instock}`}</div>
+                        <div>
+                          <button
+                            type="button"
+                            style={{ padding: "23px 30px 23px 30px" }}
+                            onClick={() => cartHandler(data)}
+                            className="btn btn-primary position-relative"
+                          >
+                            Add to Cart
+                          </button>
                         </div>
                       </div>
                     </div>
                   </div>
-                );
-              }
-            )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

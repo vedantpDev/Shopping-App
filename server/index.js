@@ -112,45 +112,6 @@ app.get("/getBrand", (req, res) => {
   });
 });
 
-// app.get("/getClotheBrand/:brandId/:subCatId", (req, res) => {
-//   if (!req.params)
-//     return res.status(400).send({
-//       error: err,
-//       message: "Please Provide Brand Id",
-//     });
-//   let q = `select * from productlist where brand_id = ${req.params.brandId} AND sub_cat_id = ${req.params.subCatId}`;
-//   conn.query(q, (err, data) => {
-//     if (err)
-//       return res.status(400).send({
-//         error: err,
-//         message: "Fail API",
-//       });
-//     res.status(200).send({
-//       data: data,
-//       message: "Success",
-//     });
-//   });
-// });
-
-// app.post("/priceRange/:subCatId", (req, res) => {
-//   console.log(req.body);
-//   if (!req.body)
-//     return res.status(400).send({
-//       message: "Please Provide Price",
-//     });
-//   let q = `select * from productlist where  sub_cat_id = ${req.params.subCatId} AND (price BETWEEN ${req.body.fVal} AND ${req.body.lVal})`;
-//   conn.query(q, (err, data) => {
-//     if (err)
-//       return res.status(400).send({
-//         error: err,
-//       });
-//     res.status(200).send({
-//       data: data,
-//       message: "Success",
-//     });
-//   });
-// });
-
 app.post("/filterData/:subCatId", (req, res) => {
   const { min, max, array } = req.body;
   if (!req.body)
@@ -162,10 +123,12 @@ app.post("/filterData/:subCatId", (req, res) => {
   if (min >= 0 && max > 0) {
     q1 = `(price BETWEEN ${min} AND ${max}) `;
   }
-  if (q1.length > 0) {
+  if (q1.length > 0 && array.length > 0) {
     q1 = q1 + ` AND brand_id in (${array})`;
-  } else {
+  } else if (array.length > 0) {
     q1 = ` brand_id in (${array})`;
+  } else {
+    q1 = q1;
   }
 
   let q = `select * from productlist where ${q1} AND sub_cat_id = ${req.params.subCatId} `;

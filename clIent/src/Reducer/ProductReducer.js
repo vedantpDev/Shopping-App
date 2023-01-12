@@ -7,6 +7,7 @@ const initialState = {
   storeSubCatId: 0,
   cloth_brands: [],
   filterProductData: [],
+  allProduct: [],
 };
 
 const ProductReducer = (state = initialState, action) => {
@@ -99,6 +100,13 @@ const ProductReducer = (state = initialState, action) => {
       return {
         ...state,
         filterProductData: action.payload,
+      };
+    }
+
+    case "PRINT_ALL_PRODUCT": {
+      return {
+        ...state,
+        allProduct: action.payload,
       };
     }
 

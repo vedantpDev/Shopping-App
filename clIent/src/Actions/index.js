@@ -149,3 +149,10 @@ export const filterProduct =
       })
       .catch((err) => console.log(err));
   };
+
+export const allProductData = (data) => (dispatch) => {
+  dispatch({
+    type: "PRINT_ALL_PRODUCT",
+    payload: data,
+  });
+};
