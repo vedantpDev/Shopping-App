@@ -165,7 +165,7 @@ app.post("/filterData/:subCatId", (req, res) => {
   if (array.length > 0) {
     q1 = q1 + `AND brand_id in (${array})`;
   } else {
-    q1 = q1 + "";
+    q1 = `brand_id in (${array})`;
   }
 
   let q = `select * from productlist where ${q1} AND sub_cat_id = ${req.params.subCatId} `;
